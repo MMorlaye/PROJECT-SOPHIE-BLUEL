@@ -171,6 +171,22 @@ body{
     position: absolute;
     bottom: 1px;
   }
+
+  #submitBtn {
+    font-family: 'Syne';
+    font-weight: 700;
+    color: white;
+    background-color: grey;
+    margin : 2em auto ;
+    width: 220px;
+    text-align: center;
+    border-radius: 60px ; 
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    position: absolute;
+    bottom: 1px;
+  }
   
   #add-image-modal {
     display: none;

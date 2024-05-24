@@ -1,31 +1,35 @@
 // import { ajoutImage } from "./modal.js";
 
-const response = await fetch('http://localhost:5678/api/works');
-const projects = await response.json();
+// const response = await fetch('http://localhost:5678/api/works');
+// const projects = await response.json();
 
-// ajoutImage();
+// // ajoutImage();
 
-function genererGallery(projects) {
-    for (const project of projects) {
-        const sectionGallery = document.querySelector('.gallery');
-        const pieceElement = document.createElement("figure");
+// function genererGallery(projects) {
+//     for (const project of projects) {
+//         createGalleryElement()
+//     }
+// }
 
-        const imageElement = document.createElement('img');
-        imageElement.src = project.imageUrl;
+// function createGalleryElement (id, imageUrl){
+//     const sectionGallery = document.querySelector('.gallery');
+//         const pieceElement = document.createElement("figure");
 
-        imageElement.className = project.id;
-        pieceElement.className = project.id;
+//         const imageElement = document.createElement('img');
+//         imageElement.src = project.imageUrl;
 
-        const titleElement = document.createElement('figcaption');
-        titleElement.innerText = project.title;
+//         imageElement.className = project.id;
+//         pieceElement.className = project.id;
 
-        sectionGallery.appendChild(pieceElement);
-        pieceElement.appendChild(imageElement);
-        pieceElement.appendChild(titleElement);
-    }
-}
+//         const titleElement = document.createElement('figcaption');
+//         titleElement.innerText = project.title;
 
-genererGallery(projects);
+//         sectionGallery.appendChild(pieceElement);
+//         pieceElement.appendChild(imageElement);
+//         pieceElement.appendChild(titleElement);
+//   }
+
+// genererGallery(projects);
 
 
 

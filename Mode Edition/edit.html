@@ -53,7 +53,7 @@
               <i class="fa-solid fa-xmark close-modal modal-trigger"></i>
               <h2>Ajout photo</h2>
               <form class="add-image-form">
-                <input type="file" id="image" name="image" accept="image/*" style="display:none;" required>
+                <input type="file" id="image" name="image" accept="image/*" required>
                 <div id="image-preview" class="image-preview">
                     <img src="./assets/svg-image/picture-svgrepo-com 1.png" alt="Picture"> <br>
                     <button id="add-file-image">+ Ajouter photo</button>
@@ -67,11 +67,11 @@
 
                 <br>
                 <label for="category">Catégorie</label> <br><br>
-                <select id="category" name="category" required>
-                  <option hidden value="choix">Choisissez une catégorie</option>
+                <select id="category" name="category">
+                  <!-- <option hidden value="choix"></option>
                   <option value="architecture">Objets</option>
                   <option value="nature">Appartements</option>
-                  <option value="portrait">Hôtel et restaurants</option>
+                  <option value="portrait">Hôtel et restaurants</option> -->
                 </select>
     
                 <div class="border">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="containt-add-image">
-                    <button type="submit" id="add-image-btn">Valider</button>
+                    <button type="submit" id="submitBtn">Valider</button>
                 </div>
               </form>
             </div>
