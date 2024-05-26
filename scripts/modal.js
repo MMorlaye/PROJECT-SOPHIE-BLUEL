@@ -1,3 +1,5 @@
+// *************** Variable_declaration *************** //
+
 const modalContainer = document.querySelector('.modal-container');
 let addImageButton = document.getElementById('add-image-btn');
 const modalTriggers = document.querySelectorAll('.modal-trigger');
@@ -10,89 +12,11 @@ const gallery = document.querySelector('#gallery');
 const imageInput = document.getElementById('image');
 const imagePreview = document.getElementById('image-preview');
 const addImageButon = document.querySelector('#add-image-btn');
+const addSubmitBtn = document.getElementById('submitBtn');
+const projectName = document.getElementById('project-name');
+const categoryInput = document.getElementById('category');
 
-// ***********************/*************************/
-
-const response = await fetch('http://localhost:5678/api/works');
-const projects = await response.json();
-
-function createGalleryElement(id, imageUrl) {
-  const sectionGallery = document.querySelector('#gallery');
-  const pieceElement = document.createElement("figure");
-
-  const imageElement = document.createElement('img');
-  imageElement.src = imageUrl;
-
-  pieceElement.className = id;
-  imageElement.className = id;
-
-  const deleteIcon = document.createElement('span');
-  deleteIcon.classList.add('delete-icon');
-  deleteIcon.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
-  deleteIcon.dataset.projetID = id;
-
-  pieceElement.appendChild(imageElement);
-  pieceElement.appendChild(deleteIcon);
-  sectionGallery.appendChild(pieceElement);
-}
-
-function createGalleryElementHome(id, imageUrl, title) {
-  const sectionGallery = document.querySelector('.gallery');
-  const pieceElement = document.createElement("figure");
-
-  const imageElement = document.createElement('img');
-  imageElement.src = imageUrl;
-
-  imageElement.className = id;
-  pieceElement.className = id;
-
-  const titleElement = document.createElement('figcaption');
-  titleElement.innerText = title;
-
-  sectionGallery.appendChild(pieceElement);
-  pieceElement.appendChild(imageElement);
-  pieceElement.appendChild(titleElement);
-}
-
-function genererGallery(projects) {
-  for (const project of projects) {
-    createGalleryElement(project.id, project.imageUrl);
-  }
-  const deleteIcons = document.querySelectorAll('.delete-icon');
-  deleteIcons.forEach(icon => {
-    icon.addEventListener('click', async (event) => {
-      event.preventDefault();
-      const projetID = icon.dataset.projetID;
-      await removeImageHomePageAndModal(projetID);
-    });
-  });
-}
-
-function genererGalleryHome(projects) {
-  for (const project of projects) {
-    createGalleryElementHome(project.id, project.imageUrl, project.title);
-  }
-}
-
-genererGallery(projects);
-genererGalleryHome(projects);
-
-async function removeImageHomePageAndModal(projetID) {
-  const token = localStorage.getItem('token');
-  const response = await fetch(`http://localhost:5678/api/works/${projetID}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
-  });
-  if (response.ok) {
-    const imageElements = document.getElementsByClassName(projetID);
-    Array.from(imageElements).forEach(element => element.remove());
-  } else {
-    console.error('La suppression de l\'image a échoué.');
-  }
-}
+// *************** Opening_The_Modal *************** //
 
 modalTriggers.forEach(trigger =>
   trigger.addEventListener('click', toggleModal)
@@ -114,6 +38,94 @@ arrowLeft.addEventListener('click', () => {
 closeAddImageModalButton.addEventListener('click', () => {
   addImageModal.style.display = 'none';
 });
+
+// ************* Function_Create_and_Generate_Gallery_of_The_Home_Page *******************//
+
+const response = await fetch('http://localhost:5678/api/works');
+const projects = await response.json();
+
+function createGalleryHomePage(id, imageUrl, title) {
+  const sectionGallery = document.querySelector('.gallery');   
+  const imageContainer = document.createElement("figure");
+
+  const projectImage = document.createElement('img');
+  projectImage.src = imageUrl;
+
+  projectImage.className = id;
+  imageContainer.className = id;
+
+  const titleElement = document.createElement('figcaption');
+  titleElement.innerText = title;
+
+  sectionGallery.appendChild(imageContainer);
+  imageContainer.appendChild(projectImage);
+  imageContainer.appendChild(titleElement);
+}
+
+function generateGalleryHomePage(projects) {
+  for (const project of projects) {
+    createGalleryHomePage(project.id, project.imageUrl, project.title);
+  }
+}
+generateGalleryHomePage(projects);
+
+// *********************** Function_Create_and_Generate_Gallery_of_The_Modal *************************/
+
+function createGalleryModal(id, imageUrl) {
+  const sectionGallery = document.querySelector('#gallery');
+  const imageContainer = document.createElement("figure");
+
+  const projectImage = document.createElement('img');
+  projectImage.src = imageUrl;
+
+  imageContainer.className = id;
+  projectImage.className = id;
+
+  const deleteIcon = document.createElement('span');
+  deleteIcon.classList.add('delete-icon');
+  deleteIcon.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+  deleteIcon.dataset.projetID = id;
+
+  imageContainer.appendChild(projectImage);
+  imageContainer.appendChild(deleteIcon);
+  sectionGallery.appendChild(imageContainer);
+
+  deleteIcon.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const projetID = deleteIcon.dataset.projetID;
+    await removeImageHomePageAndModal(projetID);
+});
+}
+
+function generateGalleryModal(projects) {
+  for (const project of projects) {
+    createGalleryModal(project.id, project.imageUrl);
+  }
+}
+
+generateGalleryModal(projects);
+
+
+// *********************** Function_Remove_Image_Home_Page_and_Modal ************************* //
+
+async function removeImageHomePageAndModal(projetID) {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`http://localhost:5678/api/works/${projetID}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  if (response.ok) {
+    const imageElements = document.getElementsByClassName(projetID);
+    Array.from(imageElements).forEach(element => element.remove());
+  } else {
+    console.error('La suppression de l\'image a échoué.');
+  }
+}
+
+// ************** Function_for_sending_a_new_project *************** //
 
 addImageForm.addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -140,13 +152,10 @@ addImageForm.addEventListener('submit', async function (e) {
 
       if (response.ok) {
         const data = await response.json();
-        const newImageElement = document.createElement('img');
-        newImageElement.src = data.imageUrl;
-        gallery.appendChild(newImageElement);
+        createGalleryHomePage(data.id, data.imageUrl, data.title);
+        createGalleryModal(data.id, data.imageUrl);
 
         addImageForm.reset();
-        createGalleryElement(data.id, data.imageUrl);
-        createGalleryElementHome(data.id, data.imageUrl, data.title);
       } else {
         console.error('Erreur lors de l\'ajout de l\'image :', response.statusText);
       }
@@ -157,6 +166,8 @@ addImageForm.addEventListener('submit', async function (e) {
     console.error('Veuillez remplir tous les champs du formulaire');
   }
 });
+
+// ************** Add_an_Image_and_Preview_it_in_The_Modal *************** //
 
 imageInput.addEventListener('change', function () {
   const file = this.files[0];
@@ -187,6 +198,8 @@ addImageButon.addEventListener('click', function () {
   imageInput.click();
 });
 
+// ************** Generate_drop-down_lists_dynamically *************** //
+
 async function getCategoriesAndUpdateDropdown() {
   const response = await fetch('http://localhost:5678/api/categories');
   const categories = await response.json();
@@ -200,13 +213,10 @@ async function getCategoriesAndUpdateDropdown() {
   });
 }
 
+// ********** Disabling and enabling the validate button before and after click ********** //
+
 const categoryElement = document.getElementById('category');
 categoryElement.addEventListener('click', getCategoriesAndUpdateDropdown);
-
-const addSubmitBtn = document.getElementById('submitBtn');
-const projectName = document.getElementById('project-name');
-const categoryInput = document.getElementById('category');
-
 function submitBtn() {
   if (imageInput.value && projectName.value && categoryInput.value) {
     addSubmitBtn.style.backgroundColor = '#1D6154';
