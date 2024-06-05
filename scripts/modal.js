@@ -16,6 +16,7 @@ const addSubmitBtn = document.getElementById('submitBtn');
 const projectName = document.getElementById('project-name');
 const categoryInput = document.getElementById('category');
 
+
 // *************** Opening_The_Modal *************** //
 
 modalTriggers.forEach(trigger =>
@@ -156,6 +157,14 @@ addImageForm.addEventListener('submit', async function (e) {
         createGalleryModal(data.id, data.imageUrl);
 
         addImageForm.reset();
+        imagePreview.innerHTML = `
+          <img src="./assets/svg-image/picture-svgrepo-com 1.png" alt="Picture"> <br>
+          <button id="add-file-image">+ Ajouter photo</button>
+          <p>jpeg, png : 4mo max</p>
+        `;
+
+        addImageModal.style.display = 'none';
+        modalContainer.classList.remove("active");
       } else {
         console.error('Erreur lors de l\'ajout de l\'image :', response.statusText);
       }
