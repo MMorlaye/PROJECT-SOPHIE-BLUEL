@@ -26,32 +26,30 @@ boutonAll.addEventListener('click', ()=>{
     return genererGallery(users);
 })
 
-const boutonObject = document.querySelector('.object')
-boutonObject.addEventListener('click', ()=>{
-    const btnObject = users.filter(function(user){
-        return user.categoryId === 1 && user.category.name === "Objets";
-    })
-    document.querySelector('.gallery').innerHTML = "";
-    genererGallery(btnObject)
-})
+// ***********************génération de mes bouton de trie depuis l'API *********************** //
+async function getCategoriesAndCreateButtons() {
+    const response = await fetch('http://localhost:5678/api/categories');
+    const categories = await response.json();
+
+    const btnTryContainer = document.querySelector('.btn-try');
+
+    categories.forEach(category => {
+        if (["Objets", "Appartements", "Hotels & restaurants"].includes(category.name)) {
+            const btn = document.createElement('button');
+            btn.classList.add('all');
+            btn.textContent = category.name;
+            btn.addEventListener('click', () => {
+                const filteredUsers = users.filter(user => user.categoryId === category.id);
+                document.querySelector('.gallery').innerHTML = "";
+                genererGallery(filteredUsers);
+            });
+            btnTryContainer.appendChild(btn);
+        }
+    });
+}
+
+getCategoriesAndCreateButtons();
 
 
-const boutonAppart = document.querySelector('.appart')
-boutonAppart.addEventListener('click', ()=>{
-    const btnAppart = users.filter(function(user){
-        return user.categoryId === 2 && user.category.name === "Appartements";
-    })
-    document.querySelector('.gallery').innerHTML = "";
-    genererGallery(btnAppart)
-})
-
-const boutonRelax = document.querySelector('.relaxation')
-boutonRelax.addEventListener('click', ()=>{
-    const btnRelax = users.filter(function(user){
-        return user.categoryId === 3 && user.category.name === "Hotels & restaurants";
-    })
-    document.querySelector('.gallery').innerHTML = "";
-    genererGallery(btnRelax)
-})
 
 

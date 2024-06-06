@@ -1,3 +1,4 @@
+const errorMessageElement = document.getElementById('error-message')
 document.querySelector('.formulaire-containt').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -16,16 +17,16 @@ document.querySelector('.formulaire-containt').addEventListener('submit', async 
             body: chargeUtile
         });
         if (!response.ok) {
+            errorMessageElement.textContent = 'Erreur : Identifiant ou mot de passe incorrect';
+            errorMessageElement.style.display = 'block';
             throw new Error('Erreur lors de l\'authentification');
         }
 
         const responseData = await response.json();
         let token = responseData.token;
 
-        // Stocker le jeton dans le stockage local 
         localStorage.setItem('token', token);
 
-        // Rediriger vers la page d'accueil après l'authentification réussie
         window.location.href = "/Mode Edition/edit.html";
 
         console.log('Authentification réussie. Jeton:', token);

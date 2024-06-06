@@ -208,8 +208,8 @@ footer nav ul {
 	border-radius: 20px;
     cursor: pointer;
   }
-  
-  .all:hover {
-    background-color: #1D6154;
+
+  .all:focus {
+	background-color: #1D6154;
 	color: white;
-  }
+}
