@@ -34,7 +34,6 @@ async function getCategoriesAndCreateButtons() {
     const btnTryContainer = document.querySelector('.btn-try');
 
     categories.forEach(category => {
-        if (["Objets", "Appartements", "Hotels & restaurants"].includes(category.name)) {
             const btn = document.createElement('button');
             btn.classList.add('all');
             btn.textContent = category.name;
@@ -44,9 +43,9 @@ async function getCategoriesAndCreateButtons() {
                 genererGallery(filteredUsers);
             });
             btnTryContainer.appendChild(btn);
-        }
     });
 }
+
 
 getCategoriesAndCreateButtons();
 
