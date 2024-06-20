@@ -102,6 +102,8 @@ input[type="submit"]{
 	text-align: center;
 }
 
-.error {
-	background-color: red;
+#error-message {
+	color: red; 
+	display: none;
 }
+

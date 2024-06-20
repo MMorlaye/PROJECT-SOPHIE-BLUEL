@@ -1,16 +1,16 @@
 const reponse = await fetch('http://localhost:5678/api/works')
-const users = await reponse.json();
+const projects = await reponse.json();
 
-function genererGallery(users) {
-    for(const user of users) {
+function genererGallery(projects) {
+    for(const project of projects) {
         const sectionGallerry = document.querySelector('.gallery')    
         const pieceElement = document.createElement("figure"); 
 
         const imageElement = document.createElement('img')
-        imageElement.src = user.imageUrl;
+        imageElement.src = project.imageUrl;
 
         const titleElement = document.createElement('figcaption')
-        titleElement.innerText = user.title;
+        titleElement.innerText = project.title;
 
         sectionGallerry.appendChild(pieceElement)
         pieceElement.appendChild(imageElement)
@@ -18,12 +18,12 @@ function genererGallery(users) {
     }
 }
 
-genererGallery(users);
+genererGallery(projects);
 
 const boutonAll = document.querySelector('.all-2')
 boutonAll.addEventListener('click', ()=>{
     document.querySelector('.gallery').innerHTML = "";
-    return genererGallery(users);
+    return genererGallery(projects);
 })
 
 // ***********************génération de mes bouton de trie depuis l'API *********************** //
@@ -38,17 +38,12 @@ async function getCategoriesAndCreateButtons() {
             btn.classList.add('all');
             btn.textContent = category.name;
             btn.addEventListener('click', () => {
-                const filteredUsers = users.filter(user => user.categoryId === category.id);
+                const filteredProjects = projects.filter(project => project.categoryId === category.id);
                 document.querySelector('.gallery').innerHTML = "";
-                genererGallery(filteredUsers);
+                genererGallery(filteredProjects);
             });
             btnTryContainer.appendChild(btn);
     });
 }
 
-
 getCategoriesAndCreateButtons();
-
-
-
-

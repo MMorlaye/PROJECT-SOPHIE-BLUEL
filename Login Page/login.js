@@ -1,5 +1,6 @@
 const errorMessageElement = document.getElementById('error-message')
-document.querySelector('.formulaire-containt').addEventListener('submit', async function(event) {
+document.querySelector('.formulaire-containt')
+.addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const formData = new FormData(this);
@@ -26,10 +27,9 @@ document.querySelector('.formulaire-containt').addEventListener('submit', async 
         let token = responseData.token;
 
         localStorage.setItem('token', token);
-
         window.location.href = "/Mode Edition/edit.html";
-
         console.log('Authentification réussie. Jeton:', token);
+        
     } catch (error) {
         console.error('Erreur:', error.message);
     }
