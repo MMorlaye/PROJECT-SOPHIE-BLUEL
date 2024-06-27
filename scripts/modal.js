@@ -145,9 +145,7 @@ addImageForm.addEventListener('submit', async function (e) {
     try {
       const response = await fetch('http://localhost:5678/api/works', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
+        headers: {'Authorization': `Bearer ${token}`},
         body: formData
       });
 
@@ -239,3 +237,15 @@ function submitBtn() {
 imageInput.addEventListener('change', submitBtn);
 projectName.addEventListener('input', submitBtn);
 categoryInput.addEventListener('change', submitBtn);
+
+
+// ************** Logout_management_on_the_page *************** //
+
+const logoutLink = document.getElementById('logout-link')
+
+logoutLink.addEventListener('click', ()=>{
+  event.preventDefault();
+  localStorage.removeItem('token')
+  window.location.href = '../index.html'
+  console.log('Déconnexion Réussie')
+})

@@ -20,7 +20,7 @@ function genererGallery(projects) {
 
 genererGallery(projects);
 
-const boutonAll = document.querySelector('.all-2')
+const boutonAll = document.querySelector('.button-active')
 boutonAll.addEventListener('click', ()=>{
     document.querySelector('.gallery').innerHTML = "";
     return genererGallery(projects);

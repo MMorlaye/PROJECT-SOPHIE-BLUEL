@@ -137,6 +137,10 @@ nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
+#logout-link{
+	text-decoration: none;
+	color: #000;
+}
 
 li:hover {
 	color: #B1663C;
